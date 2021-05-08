@@ -1,12 +1,13 @@
 import unittest
 from selenium import webdriver
+
 from config.test_settings import TestSettings
-from tests.page_objects import main_page, checkboxes_page
+from tests.page_objects import main_page, checkboxes_page, hovers_page, users_page
 
 
 class Tests(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome('C:/Program Files/webdriver/chromedriver.exe')
+        self.driver = webdriver.Chrome("C:/Program Files/chromedriver/chromedriver.exe")
         self.url = TestSettings.page_url
         self.driver.get(self.url)
         self.driver.maximize_window()
@@ -22,5 +23,9 @@ class Tests(unittest.TestCase):
         self.assertTrue(checkboxes_page.checkboxes_visible(self.driver))
         checkboxes_page.click_checkboxes(self.driver)
 
-    # def test3_checkboxes(self):
-    #     checkboxes_page.
+    def test3_hovers(self):
+        hovers_page.click_hovers_tab(self.driver)
+        self.assertTrue(hovers_page.hover_content_displayed(self.driver))
+        hovers_page.hover_over_element_and_click(self.driver)
+        self.assertTrue(users_page.error_info_displayed(self.driver))
+
