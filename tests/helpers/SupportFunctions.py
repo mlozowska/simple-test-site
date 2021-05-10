@@ -27,14 +27,10 @@ def wait_for_visibility_of_element_id(driver_instance, id):
     return elem
 
 
-# def wait_for_invisibility_of_element_xpath(inv_driver_instance, xpath):
-#     try:
-#         inv_elem = WebDriverWait(inv_driver_instance, 10).until(EC.invisibility_of_element_located((By.XPATH, xpath)))
-#     except TimeoutException:
-#         inv_elem = False
-#     return inv_elem
-
-
 def wait_for_invisibility_of_element_xpath(inv_driver_instance, xpath):
-    inv_element = WebDriverWait(inv_driver_instance, 8).until(EC.invisibility_of_element_located((By.XPATH, xpath)))
-    return inv_element
+    try:
+        inv_elem = WebDriverWait(inv_driver_instance, 10).until(EC.invisibility_of_element_located((By.XPATH, xpath)))
+    except TimeoutException:
+        inv_elem = False
+    return inv_elem
+
