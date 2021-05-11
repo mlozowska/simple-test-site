@@ -1,5 +1,4 @@
 from tests.helpers.SupportFunctions import *
-from time import sleep
 
 date_picker_tab = 'datepicker-header'
 date_picker_content = 'datepicker-content'
