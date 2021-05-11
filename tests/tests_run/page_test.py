@@ -3,7 +3,8 @@ from selenium import webdriver
 
 from config.test_settings import TestSettings
 from tests.page_objects import main_page, checkboxes_page, hovers_page, users_page,\
-    input_page, dropdown_page, add_remove_page, data_picker_page, basic_auth_page, logged_in_page
+    input_page, dropdown_page, add_remove_page, data_picker_page, basic_auth_page, logged_in_page, \
+    form_page, keypresses_page
 
 
 class Tests(unittest.TestCase):
@@ -91,15 +92,14 @@ class Tests(unittest.TestCase):
 
     def test_correct_credentials(self):
         basic_auth_page.click_basic_auth_header(self.driver)
-        self.assertTrue(basic_auth_page.send_correct_data(self.driver))
-
-        # self.assertTrue(basic_auth_page.basic_auth_content_visible(self.driver))
-        # basic_auth_page.send_correct_data(self.driver)
-
+        self.assertTrue(basic_auth_page.basic_auth_content_visible(self.driver))
+        basic_auth_page.send_correct_data(self.driver)
 
     # Logged in tests
     def test_logged_in_info_visible(self):
-        Tests.test_correct_credentials(self)
+        basic_auth_page.click_basic_auth_header(self.driver)
+        self.assertTrue(basic_auth_page.basic_auth_content_visible(self.driver))
+        basic_auth_page.send_correct_data(self.driver)
         self.assertTrue(logged_in_page.logged_in_info_displayed(self.driver))
 
     def test_return_to_main_page(self):
@@ -107,15 +107,26 @@ class Tests(unittest.TestCase):
         logged_in_page.click_return_button(self.driver)
         self.assertTrue(main_page.content_visible(self.driver))
 
+    # Form page tests
+    def test_form_page_content_visible(self):
+        form_page.click_form_page_header(self.driver)
+        self.assertTrue(form_page.form_content_visible(self.driver))
 
+    def test_send_correct_data(self):
+        form_page.click_form_page_header(self.driver)
+        self.assertTrue(form_page.send_first_last_names(self.driver))
 
+    # Key presses page tests
+    def test_click_enter(self):
+        keypresses_page.click_key_presses_tab(self.driver)
+        self.assertTrue(keypresses_page.key_presses_content_visible(self.driver))
 
+    def test_info_enter_visible(self):
+        keypresses_page.click_key_presses_tab(self.driver)
+        self.assertTrue(keypresses_page.key_presses_content_visible(self.driver))
+        keypresses_page.enter_key_press(self.driver)
+        self.assertTrue(keypresses_page.enter_info_visible(self.driver))
 
-
-
-
-    def test17_send_incorrect_date(self):
-        pass
 
 
 if __name__ == '__main__':
