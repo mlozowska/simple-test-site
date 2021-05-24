@@ -2,9 +2,10 @@ import unittest
 from selenium import webdriver
 
 from config.test_settings import TestSettings
-from tests.page_objects import main_page, checkboxes_page, hovers_page, users_page,\
-    input_page, dropdown_page, add_remove_page, data_picker_page, basic_auth_page, logged_in_page, \
-    form_page, keypresses_page, iframe_page
+from tests.page_objects import add_remove_page, logged_in_page, \
+    keypresses_page, drag_drop_page, status_codes_page
+from tests.page_objects import hovers_page, form_page, dropdown_page, users_page, checkboxes_page, main_page, \
+    input_page, basic_auth_page, iframe_page, date_picker_page
 
 
 class Tests(unittest.TestCase):
@@ -60,9 +61,6 @@ class Tests(unittest.TestCase):
         add_remove_page.add_element(self.driver)
 
     def test_delete_element(self):
-        # you can use the previous function
-        # Tests.test_add_element(self)
-
         add_remove_page.click_add_remove_tab(self.driver)
         self.assertTrue(add_remove_page.add_remove_element_content(self.driver))
         add_remove_page.add_element(self.driver)
@@ -70,23 +68,17 @@ class Tests(unittest.TestCase):
         self.assertTrue(add_remove_page.element_invisible(self.driver))
 
     # Date picker page Tests
-    def test_date_picker_tab_select(self):
-        data_picker_page.click_date_picker_tab(self.driver)
-        self.assertTrue(data_picker_page.date_picker_content_visible(self.driver))
-
     def test_date_visible(self):
-        data_picker_page.click_date_picker_tab(self.driver)
-        self.assertTrue(data_picker_page.correct_date_visible(self.driver))
+        date_picker_page.click_date_picker_tab(self.driver)
+        self.assertTrue(date_picker_page.correct_date_visible(self.driver))
 
     def test_send_correct_date(self):
-        data_picker_page.click_date_picker_tab(self.driver)
-        self.assertTrue(data_picker_page.correct_date_visible(self.driver))
-        data_picker_page.send_correct_date(self.driver)
+        date_picker_page.click_date_picker_tab(self.driver)
+        self.assertTrue(date_picker_page.send_correct_date(self.driver))
 
     def test_send_incorrect_date(self):
-        data_picker_page.click_date_picker_tab(self.driver)
-        self.assertTrue(data_picker_page.correct_date_visible(self.driver))
-        data_picker_page.send_incorrect_date(self.driver)
+        date_picker_page.click_date_picker_tab(self.driver)
+        self.assertTrue(date_picker_page.send_incorrect_date(self.driver))
 
     # Basic auth page Tests
     def test_basic_auth_content_visible(self):
@@ -134,6 +126,15 @@ class Tests(unittest.TestCase):
         keypresses_page.enter_key_press(self.driver)
         self.assertTrue(keypresses_page.enter_info_visible(self.driver))
 
+    # Status code page Tests
+    def test_status_codes_visible(self):
+        status_codes_page.status_code_tab(self.driver)
+        self.assertTrue(status_codes_page.status_code_content_visible(self.driver))
+
+    def test_status_code_displayed_200(self):
+        status_codes_page.status_code_tab(self.driver)
+        self.assertTrue(status_codes_page.code_200(self.driver))
+
     # IFrame page Tests
     def test_iframe_content_visible(self):
         iframe_page.click_iframe_tab(self.driver)
@@ -146,6 +147,16 @@ class Tests(unittest.TestCase):
     def test_iframe_2(self):
         iframe_page.click_iframe_tab(self.driver)
         self.assertTrue(iframe_page.click_inside_iframe_two(self.driver))
+
+    # Drag and drop page Tests
+    def test_drag_drop_content_visible(self):
+        drag_drop_page.click_drag_drop_tab(self.driver)
+        self.assertTrue(drag_drop_page.drag_drop_content_visible(self.driver))
+
+    def test_drag_and_drop_element(self):
+        drag_drop_page.click_drag_drop_tab(self.driver)
+        self.assertTrue(drag_drop_page.drag_drop_element(self.driver))
+
 
 
 if __name__ == '__main__':
