@@ -1,6 +1,5 @@
 from tests.helpers.SupportFunctions import *
 import os
-from time import sleep
 
 drag_drop_header = 'draganddrop-header'
 drag_drop_content = 'draganddrop-content'

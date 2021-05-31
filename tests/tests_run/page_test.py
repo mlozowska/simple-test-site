@@ -2,10 +2,9 @@ import unittest
 from selenium import webdriver
 
 from config.test_settings import TestSettings
-from tests.page_objects import add_remove_page, logged_in_page, \
-    keypresses_page, drag_drop_page, status_codes_page
-from tests.page_objects import hovers_page, form_page, dropdown_page, users_page, checkboxes_page, main_page, \
-    input_page, basic_auth_page, iframe_page, date_picker_page
+from tests.page_objects import add_remove_page, logged_in_page, keypresses_page, drag_drop_page, status_codes_page,\
+    hovers_page, form_page, dropdown_page, users_page, checkboxes_page, main_page,input_page, basic_auth_page,\
+    iframe_page, date_picker_page
 
 
 class Tests(unittest.TestCase):
@@ -61,14 +60,12 @@ class Tests(unittest.TestCase):
         add_remove_page.add_element(self.driver)
 
     def test_delete_element(self):
-        add_remove_page.click_add_remove_tab(self.driver)
-        self.assertTrue(add_remove_page.add_remove_element_content(self.driver))
-        add_remove_page.add_element(self.driver)
+        Tests.test_add_element(self)
         add_remove_page.delete_element(self.driver)
         self.assertTrue(add_remove_page.element_invisible(self.driver))
 
     # Date picker page Tests
-    def test_date_visible(self):
+    def test_date_picker_visible(self):
         date_picker_page.click_date_picker_tab(self.driver)
         self.assertTrue(date_picker_page.correct_date_visible(self.driver))
 
@@ -85,24 +82,18 @@ class Tests(unittest.TestCase):
         basic_auth_page.click_basic_auth_header(self.driver)
         self.assertTrue(basic_auth_page.basic_auth_content_visible(self.driver))
 
-    def test_incorrect_credentials_visible(self):
+    def test_send_incorrect_credentials(self):
         basic_auth_page.click_basic_auth_header(self.driver)
-        self.assertTrue(basic_auth_page.invalid_credentials_displayed(self.driver))
+        self.assertTrue(basic_auth_page.send_invalid_data(self.driver))
 
-    def test_correct_credentials(self):
+    def test_send_correct_credentials(self):
         basic_auth_page.click_basic_auth_header(self.driver)
-        self.assertTrue(basic_auth_page.basic_auth_content_visible(self.driver))
-        basic_auth_page.send_correct_data(self.driver)
-
-    # Logged in page Tests
-    def test_logged_in_info_visible(self):
-        basic_auth_page.click_basic_auth_header(self.driver)
-        self.assertTrue(basic_auth_page.basic_auth_content_visible(self.driver))
         basic_auth_page.send_correct_data(self.driver)
         self.assertTrue(logged_in_page.logged_in_info_displayed(self.driver))
 
+    # Logged in page Test
     def test_return_to_main_page(self):
-        Tests.test_logged_in_info_visible(self)
+        Tests.test_send_correct_credentials(self)
         logged_in_page.click_return_button(self.driver)
         self.assertTrue(main_page.content_visible(self.driver))
 
@@ -116,15 +107,17 @@ class Tests(unittest.TestCase):
         self.assertTrue(form_page.send_first_last_names(self.driver))
 
     # Key presses page Tests
-    def test_click_enter(self):
+    def test_key_presses_content_visible(self):
         keypresses_page.click_key_presses_tab(self.driver)
         self.assertTrue(keypresses_page.key_presses_content_visible(self.driver))
 
-    def test_info_enter_visible(self):
+    def test_key_presses_enter(self):
         keypresses_page.click_key_presses_tab(self.driver)
-        self.assertTrue(keypresses_page.key_presses_content_visible(self.driver))
-        keypresses_page.enter_key_press(self.driver)
-        self.assertTrue(keypresses_page.enter_info_visible(self.driver))
+        self.assertTrue(keypresses_page.enter_key_press(self.driver))
+
+    def test_key_presses_letter(self):
+        keypresses_page.click_key_presses_tab(self.driver)
+        self.assertTrue(keypresses_page.letter_key_press(self.driver))
 
     # Status code page Tests
     def test_status_codes_visible(self):
@@ -134,6 +127,18 @@ class Tests(unittest.TestCase):
     def test_status_code_displayed_200(self):
         status_codes_page.status_code_tab(self.driver)
         self.assertTrue(status_codes_page.code_200(self.driver))
+
+    def test_status_code_displayed_305(self):
+        status_codes_page.status_code_tab(self.driver)
+        self.assertTrue(status_codes_page.code_305(self.driver))
+
+    def test_status_code_displayed_404(self):
+        status_codes_page.status_code_tab(self.driver)
+        self.assertTrue(status_codes_page.code_404(self.driver))
+
+    def test_status_code_displayed_500(self):
+        status_codes_page.status_code_tab(self.driver)
+        self.assertTrue(status_codes_page.code_500(self.driver))
 
     # IFrame page Tests
     def test_iframe_content_visible(self):
@@ -156,7 +161,6 @@ class Tests(unittest.TestCase):
     def test_drag_and_drop_element(self):
         drag_drop_page.click_drag_drop_tab(self.driver)
         self.assertTrue(drag_drop_page.drag_drop_element(self.driver))
-
 
 
 if __name__ == '__main__':
