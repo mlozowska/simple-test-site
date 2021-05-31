@@ -10,7 +10,6 @@ def click_inputs_tab(driver_instance):
     elem.click()
 
 
-# why we have to wait for visibility of content here? Since tab is already visible, input field as well
 def inputs_content_visible(driver_instance):
     elem = wait_for_visibility_of_element_id(driver_instance, input_content)
     return elem.is_displayed()

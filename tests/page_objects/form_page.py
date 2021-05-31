@@ -22,6 +22,7 @@ def form_content_visible(driver_instance):
 
 
 def send_first_last_names(driver_instance):
+    wait_for_visibility_of_element_id(driver_instance, first_name_field)
     f_name = driver_instance.find_element_by_id(first_name_field)
     f_name.send_keys(first_name)
     l_name = driver_instance.find_element_by_id(last_name_field)
@@ -34,4 +35,5 @@ def send_first_last_names(driver_instance):
         return True
     else:
         return False
+
 
